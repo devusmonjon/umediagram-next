@@ -53,7 +53,7 @@ const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
   return (
     <>
       <Sidebar />
-      <main className="ml-[30vw]">{children}</main>
+      <main className="ml-[350px]">{children}</main>
     </>
   );
 };

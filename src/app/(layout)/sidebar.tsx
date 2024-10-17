@@ -89,7 +89,7 @@ const Sidebar = () => {
     setAuthLocal(auth as IAuthStore);
   }, [auth]);
   return (
-    <aside className="w-[30vw] h-screen bg-dark-2 fixed">
+    <aside className="w-[350px] h-screen bg-dark-2 fixed">
       <div className="px-[24px] pt-[48px] pb-[32px]">
         <Link href="/">
           <Typhography
