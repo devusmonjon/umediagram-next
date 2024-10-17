@@ -1,13 +1,90 @@
 "use client";
 import Typhography from "@/components/ui/typography";
+import {
+  ActiveNavLink,
+  ChatIcon,
+  CreatePostIcon,
+  HomeIcon,
+  ImageIcon,
+  LogoutIcon,
+  PeopleIcon,
+  ReelsIcon,
+  SavedIcon,
+  SettingsIcon,
+} from "@/icons";
 import { IAuthStore, useAuthStore } from "@/store/auth";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+
+const links = [
+  {
+    id: "home",
+    href: "/",
+    icon: <HomeIcon />,
+    label: "Home",
+  },
+  {
+    id: "explore",
+    href: "/explore",
+    icon: <ImageIcon />,
+    label: "Explore",
+  },
+  {
+    id: "people",
+    href: "/people",
+    icon: <PeopleIcon />,
+    label: "People",
+  },
+  {
+    id: "saved",
+    href: "/saved",
+    icon: <SavedIcon />,
+    label: "Saved",
+  },
+  {
+    id: "reels",
+    href: "/reels",
+    icon: <ReelsIcon />,
+    label: "Reels",
+  },
+  {
+    id: "chat",
+    href: "/chat",
+    icon: <ChatIcon />,
+    label: "Chats",
+  },
+  {
+    id: "create",
+    href: "/create",
+    icon: <CreatePostIcon />,
+    label: "Create Post",
+  },
+  {
+    id: "logout",
+    href: "/logout",
+    icon: <LogoutIcon className="navlink-icon" />,
+    label: "Logout",
+  },
+  {
+    id: "settings",
+    href: "/settings",
+    icon: <SettingsIcon className="navlink-icon" />,
+    label: "Setting",
+  },
+];
 
 const Sidebar = () => {
   const [authLocal, setAuthLocal] = useState<IAuthStore | null>(null);
+
+  const pathname = usePathname();
   const auth = useAuthStore();
+
+  const isActive = (href: string) => {
+    return pathname === href;
+  };
+
   useEffect(() => {
     setAuthLocal(auth as IAuthStore);
   }, [auth]);
@@ -79,6 +156,26 @@ const Sidebar = () => {
               </div>
             </Link>
           </li>
+          {links.map((link) => (
+            <li key={link.id}>
+              <Link
+                href={link.href}
+                className={`navlink w-full p-[16px] flex gap-[10px] items-center rounded-[8px] transition-colors duration-300 hover:bg-primary/80 relative ${
+                  isActive(link.href) ? "bg-primary" : ""
+                }`}
+              >
+                <ActiveNavLink
+                  className={`absolute -left-[24px] top-[-5px] nav-active duration-300 ${
+                    isActive(link.href) ? "text-primary" : "text-transparent"
+                  }`}
+                />
+                {link.icon}
+                <span className="text-[18px] font-bold leading-[140%] -tracking-[1] text-light-2">
+                  {link.label}
+                </span>
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </aside>
