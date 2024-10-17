@@ -83,7 +83,6 @@ const RegisterPageComponent = (): JSX.Element => {
       .then((data) => {
         try {
           if (data.error) throw new Error(data.message);
-
           auth.login(data);
           toast.success("Registration successful", {
             position: "top-center",
@@ -91,11 +90,18 @@ const RegisterPageComponent = (): JSX.Element => {
           });
 
           router.push("/");
-        } catch (error: any) {
-          toast.error(error.message || "Something went wrong", {
-            position: "top-center",
-            id: "registering",
-          });
+        } catch (error) {
+          if (error instanceof Error) {
+            toast.error(error.message, {
+              position: "top-center",
+              id: "registering",
+            });
+          } else {
+            toast.error("Something went wrong", {
+              position: "top-center",
+              id: "registering",
+            });
+          }
         }
       })
       .catch((err) => {
