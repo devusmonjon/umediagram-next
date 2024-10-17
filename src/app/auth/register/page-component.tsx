@@ -91,7 +91,6 @@ const RegisterPageComponent = (): JSX.Element => {
           });
 
           router.push("/");
-          // @typescript-eslint/no-explicit-any
         } catch (error: any) {
           toast.error(error.message || "Something went wrong", {
             position: "top-center",
