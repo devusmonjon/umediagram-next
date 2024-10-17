@@ -31,8 +31,10 @@ export interface IGetProfileUser {
   followers: IFollow[];
   following: IFollow[];
   photo: string;
+  // @typescript-eslint/no-explicit-any
   posts: any[];
   emailActivated: boolean;
+  // @typescript-eslint/no-explicit-any
   reels: any[];
 }
 

@@ -1,6 +1,6 @@
 "use client";
 import Typhography from "@/components/ui/typography";
-import { IAuthStore, IAuthUser, useAuthStore } from "@/store/auth";
+import { IAuthStore, useAuthStore } from "@/store/auth";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
