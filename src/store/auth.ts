@@ -1,10 +1,10 @@
 import { create } from "zustand";
 
 export interface ILoginUser {
-  _id: string;
-  username: string;
-  fullName: string;
-  photo: string;
+  _id?: string;
+  username?: string;
+  fullName?: string;
+  photo?: string;
 }
 export interface IAuthUser {
   user: ILoginUser;
@@ -49,7 +49,7 @@ export const useAuthStore = create<IAuthStore>((set) => ({
       console.error(e);
     }
   },
-  login: (user: IAuthUser) => {
+  login: (user) => {
     try {
       localStorage.setItem("accessToken", user.accessToken);
       localStorage.setItem("refreshToken", user.refreshToken);

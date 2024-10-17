@@ -69,7 +69,6 @@ const LoginPageComponent: NextPage = (): JSX.Element => {
       });
     } else {
       try {
-        // @ts-expect-error
         auth.login(result as IAuthUser);
 
         toast.success("Login Successful", {
