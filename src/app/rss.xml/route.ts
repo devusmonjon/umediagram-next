@@ -13,9 +13,6 @@ export async function GET() {
       <description>${post.caption}</description>
       <pubDate>${new Date(post.createdAt).toUTCString()}</pubDate>
       <guid>${siteUrl}/post/${post.owner.username}/${post._id}</guid>
-      <media:content url="${siteUrl}/uploads/${
-        post.content[0]
-      }" medium="image" />
     </item>`
     )
     .join("");

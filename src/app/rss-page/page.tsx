@@ -6,7 +6,6 @@ interface Post {
   link: string;
   pubDate: string;
   description: string;
-  "media:content": string;
 }
 
 export default function RssPage() {
@@ -27,8 +26,6 @@ export default function RssPage() {
           link: item.querySelector("link")?.textContent || "#",
           pubDate: item.querySelector("pubDate")?.textContent || "",
           description: item.querySelector("description")?.textContent || "",
-          "media:content":
-            item.querySelector("media:content")?.getAttribute("url") || "",
         }));
 
         setPosts(items);
@@ -62,7 +59,6 @@ export default function RssPage() {
               {new Date(post.pubDate).toLocaleString()}
             </p>
             <p>{post.description}</p>
-            <img src={post["media:content"]} alt={post.title} />
           </li>
         ))}
       </ul>
