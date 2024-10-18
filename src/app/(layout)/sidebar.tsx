@@ -1,4 +1,11 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import Typhography from "@/components/ui/typography";
 import {
   ActiveNavLink,
@@ -129,51 +136,81 @@ const Sidebar = () => {
         </Link>
         <ul className="mt-[32px] flex flex-col gap-[16px]">
           <li className="mb-[32px]">
-            <Link
-              href={`/profile/${authLocal?.user?.user.username}`}
-              className="w-full h-[56px] flex gap-[10px] items-center"
-            >
-              <Image
-                src={
-                  authLocal?.user?.user.photo ??
-                  "http://files.moontv.uz/uploads/profile_not_found.png"
-                }
-                width={54}
-                height={54}
-                alt="avatar"
-                className="rounded-full w-[54px] h-[54px] object-cover object-center"
-              />
-              <div>
-                <h2
-                  title={authLocal?.user?.user.fullName}
-                  className="text-[18px] font-bold leading-[140%] -tracking-[1] text-light-2"
-                >
-                  {authLocal?.user?.user.fullName}
-                </h2>
-                <span className="text-[14px] text-light-3 font-normal leading-[140%]">
-                  @{authLocal?.user?.user.username}
-                </span>
-              </div>
-            </Link>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link
+                    href={
+                      !auth.isAuthenticated
+                        ? "/auth/login"
+                        : `/profile/${authLocal?.user?.user.username}`
+                    }
+                    className="w-full h-[56px] flex gap-[10px] items-center"
+                  >
+                    <Image
+                      src={
+                        authLocal?.user?.user.photo ??
+                        "http://files.moontv.uz/uploads/profile_not_found.png"
+                      }
+                      width={54}
+                      height={54}
+                      alt="avatar"
+                      className="rounded-full w-[54px] h-[54px] object-cover object-center"
+                    />
+                    <div>
+                      <h2
+                        title={authLocal?.user?.user.fullName}
+                        className="text-[18px] font-bold leading-[140%] -tracking-[1] text-light-2"
+                      >
+                        {auth.isAuthenticated
+                          ? `@${authLocal?.user?.user.fullName}`
+                          : "Guest"}
+                      </h2>
+                      <span className="text-[14px] text-light-3 font-normal leading-[140%]">
+                        {auth.isAuthenticated
+                          ? `@${authLocal?.user?.user.username}`
+                          : "guest"}
+                      </span>
+                    </div>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>
+                    {auth.isAuthenticated
+                      ? `@${authLocal?.user?.user.username}`
+                      : "guest"}
+                  </p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </li>
           {links.map((link) => (
             <li key={link.id}>
-              <Link
-                href={link.href}
-                className={`navlink w-full p-[16px] flex gap-[10px] items-center rounded-[8px] transition-colors duration-300 hover:bg-primary/80 relative ${
-                  isActive(link.href) ? "bg-primary" : ""
-                }`}
-              >
-                <ActiveNavLink
-                  className={`absolute -left-[24px] top-[-5px] nav-active duration-300 ${
-                    isActive(link.href) ? "text-primary" : "text-transparent"
-                  }`}
-                />
-                {link.icon}
-                <span className="text-[18px] font-bold leading-[140%] -tracking-[1] text-light-2">
-                  {link.label}
-                </span>
-              </Link>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Link
+                      href={link.href}
+                      className={`navlink w-full p-[16px] flex gap-[10px] items-center rounded-[8px] transition-colors duration-300 hover:bg-primary/80 relative ${
+                        isActive(link.href) ? "bg-primary" : ""
+                      }`}
+                    >
+                      <ActiveNavLink
+                        className={`absolute -left-[24px] top-[-5px] nav-active duration-300 ${
+                          isActive(link.href)
+                            ? "text-primary"
+                            : "text-transparent"
+                        }`}
+                      />
+                      {link.icon}
+                      <span className="text-[18px] font-bold leading-[140%] -tracking-[1] text-light-2">
+                        {link.label}
+                      </span>
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent>{link.label}</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </li>
           ))}
         </ul>
