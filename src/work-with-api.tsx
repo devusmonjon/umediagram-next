@@ -46,9 +46,37 @@ const getAllUsernames = async (): Promise<string[]> => {
   return response.json();
 };
 
-const getAllPosts = async (): Promise<
-  { title: string; slug: string; date: string; description: string }[]
-> => {
+export interface IPost {
+  _id: string;
+  owner: IPostOwner;
+  content: any[];
+  content_alt: string;
+  caption: string;
+  private: boolean;
+  deleted: boolean;
+  published: boolean;
+  show_likes: boolean;
+  comments_enabled: boolean;
+  likes_count: number;
+  comments_count: number;
+  shares_count: number;
+  views_count: number;
+  reels: boolean;
+  location: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface IPostOwner {
+  _id: string;
+  email: string;
+  username: string;
+  photo: string;
+  fullName: string;
+}
+
+const getAllPosts = async (): Promise<IPost[]> => {
   const response = await fetch(`${API_URL}/api/post`);
   const posts = await response.json();
   return posts;
