@@ -13,12 +13,15 @@ export async function GET() {
       <description>${post.caption}</description>
       <pubDate>${new Date(post.createdAt).toUTCString()}</pubDate>
       <guid>${siteUrl}/post/${post.owner.username}/${post._id}</guid>
+      <media:content url="${siteUrl}/uploads/${
+        post.content[0]
+      }" medium="image" />
     </item>`
     )
     .join("");
 
   const rssXml = `<?xml version="1.0" encoding="UTF-8" ?>
-    <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
       <channel>
         <title>UMEDIAGRAM - Latest Posts</title>
         <link>${siteUrl}</link>
