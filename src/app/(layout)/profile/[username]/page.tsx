@@ -1,7 +1,17 @@
 import { getProfile } from "@/work-with-api";
-
-async function generateMetadata({ username }: { username: string }) {
+let username1: string | null = null;
+const Profile = async ({
+  params: { username },
+}: {
+  params: { username: string };
+}) => {
+  username1 = username;
   const profile = await getProfile(username, true);
+
+  return <div>{profile.fullName}</div>;
+};
+async function generateMetadata() {
+  const profile = await getProfile(username1 ?? "", true);
   if (!profile) {
     // metadata
     return {
@@ -126,14 +136,5 @@ async function generateMetadata({ username }: { username: string }) {
   };
 }
 export { generateMetadata };
-const Profile = async ({
-  params: { username },
-}: {
-  params: { username: string };
-}) => {
-  const profile = await getProfile(username, true);
-
-  return <div>{profile.fullName}</div>;
-};
 
 export default Profile;
