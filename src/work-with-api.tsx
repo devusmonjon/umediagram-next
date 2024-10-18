@@ -46,6 +46,14 @@ const getAllUsernames = async (): Promise<string[]> => {
   return response.json();
 };
 
+const getAllPosts = async (): Promise<
+  { title: string; slug: string; date: string; description: string }[]
+> => {
+  const response = await fetch(`${API_URL}/api/post`);
+  const posts = await response.json();
+  return posts;
+};
+
 const checkUser = async () => {
   const response = await fetch(`${API_URL}/api/user/profile`, {
     method: "GET",
@@ -124,4 +132,5 @@ export {
   uploadFile,
   getProfile,
   getAllUsernames,
+  getAllPosts,
 };
