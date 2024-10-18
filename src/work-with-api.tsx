@@ -49,7 +49,7 @@ const getAllUsernames = async (): Promise<string[]> => {
 export interface IPost {
   _id: string;
   owner: IPostOwner;
-  content: any[];
+  content: string[];
   content_alt: string;
   caption: string;
   private: boolean;
