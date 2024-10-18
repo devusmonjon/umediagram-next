@@ -138,6 +138,8 @@ const RegisterPageComponent = (): JSX.Element => {
                       id="full_name"
                       className="w-full p-3 rounded bg-dark-4 text-white"
                       disabled={loading}
+                      autoComplete="full_name"
+                      autoFocus
                       {...field}
                     />
                   </FormControl>
@@ -158,7 +160,7 @@ const RegisterPageComponent = (): JSX.Element => {
                     <Input
                       type="text"
                       id="username"
-                      className="w-full p-3 rounded bg-dark-4 text-white"
+                      className="w-full p-3 rounded bg-dark-4 text-white lowercase"
                       disabled={loading}
                       {...field}
                     />
@@ -252,6 +254,8 @@ const RegisterPageComponent = (): JSX.Element => {
                         id="password"
                         className="w-full p-3 rounded bg-dark-4 text-white"
                         disabled={loading}
+                        autoComplete="off"
+                        onPaste={(e) => e.preventDefault()}
                         {...field}
                       />
                       <Button
@@ -287,6 +291,8 @@ const RegisterPageComponent = (): JSX.Element => {
                         id="passwordConfirm"
                         className="w-full p-3 rounded bg-dark-4 text-white"
                         disabled={loading}
+                        autoComplete="off"
+                        onPaste={(e) => e.preventDefault()}
                         {...field}
                       />
                       <Button

@@ -24,10 +24,11 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { login } from "../../../work-with-api";
 import { IAuthUser, useAuthStore } from "@/store/auth";
-import { useEffect } from "react";
-import { X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Loader2, X } from "lucide-react";
 
 const LoginPageComponent: NextPage = (): JSX.Element => {
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof loginFormSchema>>({
@@ -55,6 +56,7 @@ const LoginPageComponent: NextPage = (): JSX.Element => {
     }
   }, []);
   const handleSubmit = async (values: z.infer<typeof loginFormSchema>) => {
+    setLoading(true);
     const loading = toast.loading("Authenticating...", {
       position: "top-center",
     });
@@ -67,10 +69,11 @@ const LoginPageComponent: NextPage = (): JSX.Element => {
         position: "top-center",
         id: loading,
       });
+      setLoading(false);
     } else {
       try {
         auth.login(result as IAuthUser);
-
+        setLoading(false);
         toast.success("Login Successful", {
           position: "top-center",
           id: loading,
@@ -83,6 +86,7 @@ const LoginPageComponent: NextPage = (): JSX.Element => {
           position: "top-center",
           id: loading,
         });
+        setLoading(false);
       }
     }
   };
@@ -109,8 +113,11 @@ const LoginPageComponent: NextPage = (): JSX.Element => {
                     <Input
                       type="username"
                       id="username"
-                      className="w-full p-3 rounded bg-dark-4 text-white focus:outline-none focus:ring-2 border-none"
+                      className="w-full p-3 rounded bg-dark-4 text-white focus:outline-none focus:ring-2 border-none lowercase"
                       {...field}
+                      autoComplete="off"
+                      autoFocus
+                      disabled={loading}
                     />
                   </FormControl>
                   <FormMessage />
@@ -131,6 +138,8 @@ const LoginPageComponent: NextPage = (): JSX.Element => {
                       id="password"
                       className="w-full p-3 rounded bg-dark-4 text-white focus:outline-none focus:ring-2 border-none"
                       {...field}
+                      autoComplete="off"
+                      disabled={loading}
                     />
                   </FormControl>
                   <FormMessage />
@@ -140,8 +149,16 @@ const LoginPageComponent: NextPage = (): JSX.Element => {
             <Button
               type="submit"
               className="w-full bg-primary hover:bg-indigo-600 p-3 rounded text-white font-medium duration-300 mt-[10px]"
+              disabled={loading}
             >
-              Log in
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </>
+              ) : (
+                "Register"
+              )}
             </Button>
           </form>
         </Form>
