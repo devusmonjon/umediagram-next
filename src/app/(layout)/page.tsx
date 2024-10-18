@@ -2,9 +2,9 @@ import Link from "next/link";
 
 const Home = () => {
   return (
-    <div>
+    <section id="feed px-[56px]">
       <Link href="/auth/login">Login</Link>
-    </div>
+    </section>
   );
 };
 

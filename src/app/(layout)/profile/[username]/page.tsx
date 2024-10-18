@@ -1,4 +1,5 @@
 import { getProfile } from "@/work-with-api";
+import ProfilePageComponent from "./page-component";
 let username1: string | null = null;
 const Profile = async ({
   params: { username },
@@ -8,7 +9,11 @@ const Profile = async ({
   username1 = username;
   const profile = await getProfile(username, true);
 
-  return <div>{profile.fullName}</div>;
+  return (
+    <>
+      <ProfilePageComponent profile={profile} />
+    </>
+  );
 };
 async function generateMetadata() {
   const profile = await getProfile(username1 ?? "", true);

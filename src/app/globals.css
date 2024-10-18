@@ -92,4 +92,10 @@ body {
   .navlink:hover .nav-active {
     @apply text-primary/80;
   }
+  .navlink[href="/logout"]:hover .nav-active {
+    @apply text-red-500/80;
+  }
+  .navlink:hover .aaa {
+    @apply text-white;
+  }
 }

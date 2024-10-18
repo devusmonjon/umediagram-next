@@ -95,12 +95,12 @@ const Sidebar = () => {
     setAuthLocal(auth as IAuthStore);
   }, [auth]);
   return (
-    <aside className="w-[350px] h-screen bg-dark-2 fixed">
+    <aside className="w-[104px] overflow-x-hidden duration-300 whitespace-nowrap md:w-[350px] h-screen bg-dark-2 fixed">
       <div className="px-[24px] pt-[48px] pb-[32px]">
         <Link href="/">
           <Typhography
             variant="h2"
-            className="text-[28x] flex items-center gap-[8px]"
+            className="text-[28x] flex items-center gap-[8px] duration-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -108,6 +108,7 @@ const Sidebar = () => {
               height="30"
               viewBox="0 0 30 30"
               fill="none"
+              className="min-w-max"
             >
               <path
                 fillRule="evenodd"
@@ -130,7 +131,9 @@ const Sidebar = () => {
                 </linearGradient>
               </defs>
             </svg>{" "}
-            UMEDIAGRAM
+            <span className="duration-300 opacity-0 md:opacity-100">
+              UMEDIAGRAM
+            </span>
           </Typhography>
         </Link>
         <ul className="mt-[32px] flex flex-col gap-[16px]">
@@ -156,7 +159,7 @@ const Sidebar = () => {
                       alt="avatar"
                       className="rounded-full w-[54px] h-[54px] object-cover object-center"
                     />
-                    <div>
+                    <div className="duration-300 opacity-0 md:opacity-100">
                       <h2
                         title={authLocal?.user?.user.fullName}
                         className="text-[18px] font-bold leading-[140%] -tracking-[1] text-light-2"
@@ -190,19 +193,37 @@ const Sidebar = () => {
                   <TooltipTrigger asChild>
                     <Link
                       href={link.href}
-                      className={`navlink w-full p-[16px] flex gap-[10px] items-center rounded-[8px] transition-colors duration-300 hover:bg-primary/80 relative ${
-                        isActive(link.href) ? "bg-primary" : ""
+                      className={`navlink w-full p-[16px] flex gap-[10px] items-center rounded-[8px] transition-colors duration-300 ${
+                        link.href === "/logout"
+                          ? "hover:bg-red-500"
+                          : "hover:bg-primary/80"
+                      } relative ${
+                        isActive(link.href)
+                          ? link.href === "/logout"
+                            ? "text-red-500"
+                            : "bg-primary"
+                          : ""
                       }`}
                     >
                       <ActiveNavLink
-                        className={`absolute -left-[24px] top-[-5px] nav-active duration-300 ${
+                        className={`absolute -left-[30px] top-[-5px] nav-active duration-300 ${
                           isActive(link.href)
-                            ? "text-primary"
+                            ? link.href === "/logout"
+                              ? "text-red-500"
+                              : "text-primary"
                             : "text-transparent"
                         }`}
                       />
-                      {link.icon}
-                      <span className="text-[18px] font-bold leading-[140%] -tracking-[1] text-light-2">
+                      <span
+                        className={`${
+                          isActive(link.href) ? "text-white" : "text-primary"
+                        } aaa`}
+                      >
+                        {link.icon}
+                      </span>
+                      <span
+                        className={`text-[18px] font-bold leading-[140%] -tracking-[1] text-light-2 duration-300 opacity-0 md:opacity-100`}
+                      >
                         {link.label}
                       </span>
                     </Link>

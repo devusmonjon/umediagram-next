@@ -11,7 +11,7 @@ export const HomeIcon = ({
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -41,7 +41,7 @@ export const ImageIcon = ({
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -67,7 +67,7 @@ export const PeopleIcon = ({
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -106,7 +106,7 @@ export const SavedIcon = ({
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -135,7 +135,7 @@ export const ReelsIcon = ({
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -161,7 +161,7 @@ export const ChatIcon = ({
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -187,7 +187,7 @@ export const CreatePostIcon = ({
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -219,7 +219,7 @@ export const LogoutIcon = ({
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -249,7 +249,7 @@ export const SettingsIcon = ({
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -281,7 +281,7 @@ export const ArrowRightIcon = ({
       height="19"
       viewBox="0 0 18 19"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -305,7 +305,7 @@ export const ArrowLeftIcon = ({
       height="19"
       viewBox="0 0 18 19"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -329,7 +329,7 @@ export const FilterIcon = ({
       height="20"
       viewBox="0 0 20 20"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -367,7 +367,7 @@ export const EditIcon = ({
       height="20"
       viewBox="0 0 20 20"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -393,7 +393,7 @@ export const MessageIcon = ({
       height="20"
       viewBox="0 0 20 20"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -426,7 +426,7 @@ export const ShareIcon = ({ className, ...props }: { className?: string }) => {
       height="20"
       viewBox="0 0 20 20"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -447,7 +447,7 @@ export const SendIcon = ({ className, ...props }: { className?: string }) => {
       height="20"
       viewBox="0 0 20 20"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -474,7 +474,7 @@ export const HeartIcon = ({
       height="20"
       viewBox="0 0 20 20"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -500,7 +500,7 @@ export const HeartFilledIcon = ({
       height="20"
       viewBox="0 0 20 20"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -524,7 +524,7 @@ export const SaveFilledIcon = ({
       height="20"
       viewBox="0 0 20 20"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <path
@@ -550,7 +550,7 @@ export const ActiveNavLink = ({
       height="66"
       viewBox="0 0 23 66"
       fill="none"
-      className={className}
+      className={`duration-300 ${className}`}
       {...props}
     >
       <g filter="url(#filter0_d_1_482)">
