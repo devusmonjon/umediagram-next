@@ -1,9 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: false,
     images: {
-        domains: ["sea-turtle-app-c2icp.ondigitalocean.app", "files.moontv.uz"]
-    }
+        domains: ["files.moontv.uz", "https://sea-turtle-app-c2icp.ondigitalocean.app"]
+    },
+    reactStrictMode: false,
+    async generateSitemap() {
+        return {
+            paths: ["/sitemap.xml"],
+            generateSitemap: import("./sitemap.ts").default,
+        };
+    },
 };
 
 export default nextConfig;

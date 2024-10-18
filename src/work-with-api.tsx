@@ -41,6 +41,11 @@ export interface IFollow {
   _id: string;
 }
 
+const getAllUsernames = async (): Promise<string[]> => {
+  const response = await fetch(`${API_URL}/api/user/usernames`);
+  return response.json();
+};
+
 const checkUser = async () => {
   const response = await fetch(`${API_URL}/api/user/profile`, {
     method: "GET",
@@ -111,4 +116,12 @@ const getProfile = async (
   return response.json();
 };
 
-export { login, register, checkUser, refreshToken, uploadFile, getProfile };
+export {
+  login,
+  register,
+  checkUser,
+  refreshToken,
+  uploadFile,
+  getProfile,
+  getAllUsernames,
+};
