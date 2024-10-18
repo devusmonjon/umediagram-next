@@ -324,7 +324,7 @@ const RegisterPageComponent = (): JSX.Element => {
                   Please wait
                 </>
               ) : (
-                "Register"
+                "Login"
               )}
             </Button>
           </form>
