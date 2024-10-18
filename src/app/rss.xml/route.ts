@@ -13,7 +13,7 @@ export async function GET() {
       <description>${post.caption}</description>
       <pubDate>${new Date(post.createdAt).toUTCString()}</pubDate>
       <guid>${siteUrl}/post/${post.owner.username}/${post._id}</guid>
-      <author>${post.owner.username}</author>
+      <author>${post.owner.email}</author>
     </item>`
     )
     .join("");
