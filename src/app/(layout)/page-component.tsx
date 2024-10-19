@@ -35,10 +35,7 @@ const HomePageComponent = () => {
           Home Feed
         </Typhography>
         <Select>
-          <SelectTrigger
-            className="min-w-[80px] w-min gap-[10px]"
-            icon={<FilterIcon />}
-          >
+          <SelectTrigger className="min-w-[80px] w-min gap-[10px]">
             <SelectValue placeholder="Sort" />
           </SelectTrigger>
           <SelectContent>

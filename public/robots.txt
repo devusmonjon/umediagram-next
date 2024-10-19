@@ -1,5 +1,9 @@
+# *
 User-agent: *
 Allow: /
 
+# Host
+Host: https://umediagram.vercel.app
+
+# Sitemaps
 Sitemap: https://umediagram.vercel.app/sitemap.xml
-RSS: https://umediagram.vercel.app/rss.xml
