@@ -7,7 +7,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Typhography from "@/components/ui/typography";
-import { FilterIcon } from "@/icons";
 import { getFeed, IPost } from "@/work-with-api";
 import Image from "next/image";
 import { useEffect, useState } from "react";
