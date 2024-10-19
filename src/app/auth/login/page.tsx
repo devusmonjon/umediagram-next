@@ -1,3 +1,4 @@
+import { getFeed } from "@/work-with-api";
 import LoginPageComponent from "./page-component";
 
 // metadata
@@ -22,7 +23,10 @@ async function generateMetadata() {
 }
 
 export { generateMetadata };
-const Login = () => {
+const Login = async () => {
+  const feed = await getFeed();
+  console.log(feed);
+
   return <LoginPageComponent />;
 };
 

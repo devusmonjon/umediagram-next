@@ -1,4 +1,6 @@
+"use server";
 import { API_URL } from "@/constants";
+import { cookies } from "next/headers";
 
 export interface ILoginUser {
   user: {
@@ -49,7 +51,7 @@ const getAllUsernames = async (): Promise<string[]> => {
 export interface IPost {
   _id: string;
   owner: IPostOwner;
-  content: string[];
+  content: { url: string; type: "VIDEO" | "AUDIO" | "IMAGE" }[];
   content_alt: string;
   caption: string;
   private: boolean;
@@ -83,19 +85,23 @@ const getAllPosts = async (): Promise<IPost[]> => {
 };
 
 const checkUser = async () => {
+  const cookieStore = cookies();
+  const token = cookieStore.get("accessToken")?.value;
   const response = await fetch(`${API_URL}/api/user/profile`, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   return response.json();
 };
 const refreshToken = async () => {
+  const cookieStore = cookies();
+  const token = cookieStore.get("refreshToken");
   const response = await fetch(`${API_URL}/api/auth/access`, {
     method: "POST",
     body: JSON.stringify({
-      refreshToken: localStorage.getItem("refreshToken"),
+      refreshToken: token,
     }),
   });
   return response.json();
@@ -114,6 +120,8 @@ const login = async (
   return response.json() as Promise<ILoginUser & errorAuthUser>;
 };
 const uploadFile = async (file: File, isList = false) => {
+  const cookieStore = cookies();
+  const token = cookieStore.get("accessToken")?.value;
   const formData = new FormData();
   if (!isList) {
     formData.append("files", file);
@@ -123,7 +131,7 @@ const uploadFile = async (file: File, isList = false) => {
   const response = await fetch(`${API_URL}/api/upload/files`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      Authorization: `Bearer ${token}`,
     },
     body: formData,
   });
@@ -152,6 +160,21 @@ const getProfile = async (
   return response.json();
 };
 
+const getFeed = async (limit: number = 10): Promise<{ posts: IPost[] }> => {
+  const cookieStore = cookies();
+  const token = cookieStore.get("accessToken")?.value;
+  // return { token };
+  const response = await fetch(`${API_URL}/api/user/feed?limit=${limit}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    next: {
+      revalidate: 6,
+    },
+  });
+  return response.json();
+};
+
 export {
   login,
   register,
@@ -161,4 +184,5 @@ export {
   getProfile,
   getAllUsernames,
   getAllPosts,
+  getFeed,
 };

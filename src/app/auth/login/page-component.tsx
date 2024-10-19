@@ -15,7 +15,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { loginFormSchema } from "../auth.dto";
@@ -38,7 +37,9 @@ const LoginPageComponent: NextPage = (): JSX.Element => {
       password: "",
     },
   });
+
   const auth = useAuthStore();
+
   useEffect(() => {
     if (auth.isAuthenticated) {
       toast.error("You are already logged in", {
@@ -55,36 +56,34 @@ const LoginPageComponent: NextPage = (): JSX.Element => {
       router.push("/");
     }
   }, []);
+
   const handleSubmit = async (values: z.infer<typeof loginFormSchema>) => {
     setLoading(true);
-    const loading = toast.loading("Authenticating...", {
+    const loadingToast = toast.loading("Authenticating...", {
       position: "top-center",
     });
+
     const result = await login(values.username, values.password);
     console.log(result);
 
     if (result?.error || !result) {
-      // Handle error (e.g., show a message)
-      toast.error(result.message, {
-        position: "top-center",
-        id: loading,
-      });
+      toast.error(result.message, { position: "top-center", id: loadingToast });
       setLoading(false);
     } else {
       try {
         auth.login(result as IAuthUser);
         setLoading(false);
+
         toast.success("Login Successful", {
           position: "top-center",
-          id: loading,
+          id: loadingToast,
         });
         router.push("/");
       } catch (e) {
-        // Handle error (e.g., show a message)
         console.error(e);
         toast.error("Something went wrong", {
           position: "top-center",
-          id: loading,
+          id: loadingToast,
         });
         setLoading(false);
       }
@@ -93,7 +92,6 @@ const LoginPageComponent: NextPage = (): JSX.Element => {
 
   return (
     <div className="flex min-h-screen">
-      {/* Chap panel: Login form */}
       <div className="w-full max-w-md p-8 mx-auto flex flex-col justify-center space-y-6 bg-black text-white">
         <div className="text-center">
           <h1 className="text-4xl font-bold">Snapgram</h1>
@@ -111,7 +109,7 @@ const LoginPageComponent: NextPage = (): JSX.Element => {
                   </FormLabel>
                   <FormControl>
                     <Input
-                      type="username"
+                      type="text"
                       id="username"
                       className="w-full p-3 rounded bg-dark-4 text-white focus:outline-none focus:ring-2 border-none lowercase"
                       {...field}
@@ -152,10 +150,7 @@ const LoginPageComponent: NextPage = (): JSX.Element => {
               disabled={loading}
             >
               {loading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Please wait
-                </>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (
                 "Login"
               )}
@@ -166,7 +161,6 @@ const LoginPageComponent: NextPage = (): JSX.Element => {
           <GoogleIcon />
           <span>Sign in with Google</span>
         </Button>
-
         <p className="text-center text-sm text-gray-400">
           Don’t have an account?{" "}
           <Link href="/auth/register" className="text-primary hover:underline">
@@ -174,15 +168,13 @@ const LoginPageComponent: NextPage = (): JSX.Element => {
           </Link>
         </p>
       </div>
-
-      {/* O'ng panel: Image bilan */}
       <div className="hidden lg:flex w-1/2 relative">
         <Image
           src="/bg.png"
           alt="Background"
           layout="fill"
           objectFit="cover"
-          priority={false} // Lazy loading uchun
+          priority={false}
           placeholder="blur"
           blurDataURL="/bg.png"
         />

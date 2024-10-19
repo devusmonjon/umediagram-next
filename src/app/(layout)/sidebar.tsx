@@ -95,7 +95,7 @@ const Sidebar = () => {
     setAuthLocal(auth as IAuthStore);
   }, [auth]);
   return (
-    <aside className="w-[104px] overflow-x-hidden duration-300 whitespace-nowrap md:w-[350px] h-screen bg-dark-2 fixed">
+    <aside className="w-[104px] overflow-x-hidden duration-300 whitespace-nowrap md:w-[350px] h-screen bg-dark-2 fixed top-0">
       <div className="px-[24px] pt-[48px] pb-[32px]">
         <Link href="/">
           <Typhography
@@ -151,8 +151,12 @@ const Sidebar = () => {
                   >
                     <Image
                       src={
-                        authLocal?.user?.user.photo ??
-                        "http://files.moontv.uz/uploads/profile_not_found.png"
+                        authLocal?.user?.user.photo &&
+                        authLocal?.user?.user.photo != "null"
+                          ? authLocal?.user?.user.photo.includes("http")
+                            ? authLocal?.user?.user.photo
+                            : `http://files.moontv.uz/uploads/${authLocal?.user?.user.photo}`
+                          : "http://files.moontv.uz/uploads/profile_not_found.png"
                       }
                       width={54}
                       height={54}
@@ -200,7 +204,7 @@ const Sidebar = () => {
                       } relative ${
                         isActive(link.href)
                           ? link.href === "/logout"
-                            ? "text-red-500"
+                            ? "bg-red-500"
                             : "bg-primary"
                           : ""
                       }`}

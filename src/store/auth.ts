@@ -1,4 +1,6 @@
+"use client";
 import { create } from "zustand";
+import Cookies from "js-cookie";
 
 export interface ILoginUser {
   _id?: string;
@@ -24,8 +26,8 @@ let user: IAuthUser | null = null,
   accessToken = "",
   refreshToken = "";
 try {
-  accessToken = localStorage.getItem("accessToken") || "";
-  refreshToken = localStorage.getItem("refreshToken") || "";
+  accessToken = Cookies.get("accessToken") || "";
+  refreshToken = Cookies.get("refreshToken") || "";
   user = JSON.parse(localStorage.getItem("user") || "null");
 } catch (e) {
   console.error(e);
@@ -38,7 +40,9 @@ export const useAuthStore = create<IAuthStore>((set) => ({
   isAuthenticated: accessToken ? true : false,
   logout: () => {
     try {
-      localStorage.clear();
+      Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
+      localStorage.removeItem("user");
       set({
         accessToken: "",
         user: null,
@@ -51,8 +55,14 @@ export const useAuthStore = create<IAuthStore>((set) => ({
   },
   login: (user) => {
     try {
-      localStorage.setItem("accessToken", user.accessToken);
-      localStorage.setItem("refreshToken", user.refreshToken);
+      Cookies.set("accessToken", user.accessToken, {
+        expires: 14, // 7 kun amal qiladi
+        path: "/", // Barcha route-larda foydalanish uchun
+        secure: true, // HTTPS orqali jo‘natiladi
+        sameSite: "strict", // CSRF hujumlaridan himoya
+      });
+
+      Cookies.set("refreshToken", user.refreshToken, { expires: 30 });
       localStorage.setItem("user", JSON.stringify(user));
       set({
         accessToken: user.accessToken,

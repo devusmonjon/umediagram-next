@@ -54,7 +54,7 @@ body {
     --secondary-foreground: 210 40% 98%;
     --muted: 40 100% 56%;
     --muted-foreground: 215 20.2% 65.1%;
-    --accent: 40 100% 56%;
+    --accent: 244 100% 75%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
@@ -86,7 +86,8 @@ body {
     transition: none;
   }
 
-  a {
+  a,
+  div[role="article"] {
     @apply ring-offset-background focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50;
   }
   .navlink:hover .nav-active {
