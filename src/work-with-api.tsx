@@ -36,6 +36,7 @@ export interface IGetProfileUser {
   posts: [];
   emailActivated: boolean;
   reels: [];
+  bio: string;
 }
 
 export interface IFollow {
@@ -67,7 +68,18 @@ export interface IPost {
   location: string;
   createdAt: string;
   updatedAt: string;
+  comments: IComment[];
   __v: number;
+}
+
+export interface IComment {
+  _id: string;
+  owner: string;
+  which_post: string;
+  message: string;
+  createdAt: string;
+  updatedAt: string;
+  likes_count: number;
 }
 
 export interface IPostOwner {

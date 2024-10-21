@@ -7,16 +7,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Typhography from "@/components/ui/typography";
-import { getFeed, IPost } from "@/work-with-api";
+import { getFeed, IComment, IPost } from "@/work-with-api";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import VideoPlayer from "@/components/shared/video-player";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
-import { EditIcon, SendIcon } from "@/icons";
+import { ChatIcon, EditIcon, HeartIcon, SendIcon } from "@/icons";
 import { useAuthStore } from "@/store/auth";
 import { Input } from "@/components/ui/input";
 import "swiper/css";
+import Cookies from "js-cookie";
+import { Comment } from "@/components/shared/comment";
+import { toast } from "sonner";
 
 const HomePageComponent = () => {
   const [feed, setFeed] = useState<{ posts: IPost[] } | null>(null);
@@ -28,6 +31,8 @@ const HomePageComponent = () => {
     getFeed(50)
       .then((res) => res)
       .then((data) => setFeed(data));
+
+      
   }, []);
 
   // Scroll orqali postlarni boshqarish
@@ -83,7 +88,23 @@ const HomePageComponent = () => {
         </Select>
       </div>
 
-      {feed?.posts?.map((post, index) => (
+      {feed?.posts?.map(async (post, index) => {
+        
+        const comment = (fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/comment/post/${post._id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Cookies.get("accessToken")}`,
+          },
+          next: {
+            revalidate: 6,
+            tags: ["comments"],
+          }
+        }));
+        post.comments = await comment.then((res) => res.json()).then((data) => data) as IComment[];
+        console.log(post.comments);
+        
+        return (
   <div
     key={post._id}
     // @typescript-eslint/ban-ts-comment
@@ -155,16 +176,82 @@ const HomePageComponent = () => {
     </Swiper> 
 
           <div className="mt-[40px]">
+            <div className="flex gap-[10px] items-center mb-[20px]">
+              <div className="flex gap-[10px] items-center">
+                <HeartIcon />
+                <p className="text-light-3 text-[14px] font-semibold leading-[140%]">
+                  {post.likes_count}
+                </p>
+              </div>
+              <div className="flex gap-[10px] items-center">
+                <ChatIcon />
+                <p className="text-light-3 text-[14px] font-semibold leading-[140%]">
+                  {post.comments.length}
+                </p>
+              </div>
+            </div>
+            {/* // comments get */}
+            <div className="w-full flex flex-col gap-[10px]">
+              {
+                post.comments.map((comment) => (
+                  <Comment comment={comment} key={comment._id} />
+                ))
+              }
+            </div>
             <div className="flex gap-[10px] items-center rounded-lg">
               <img
                 src={`${post.owner?.photo}`}
                 alt={post.owner?.fullName}
                 className="w-[50px] h-[50px] rounded-full object-cover object-center"
               />
-              <form onSubmit={(e) => e.preventDefault()} className="w-full relative flex items-center">
+              <form onSubmit={(e) => {
+                const formData = new FormData(e.currentTarget);
+                const formDataObj = Object.fromEntries(formData.entries());
+                console.log(formDataObj);
+                toast.loading("Sending comment...", {
+                  id: "comment",
+                  position: "top-center",
+                });
+                fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/comment/${post._id}`, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${auth.user?.accessToken}`,
+                  },
+                  body: JSON.stringify(formDataObj),
+                  next: {
+                    tags: ["comment"],
+                  }
+                }).then((res) => {
+                  if (res.ok) {
+                    return res.json();
+                  } else {
+                    toast.error("Failed to create comment", {
+                      id: "comment",
+                      position: "top-center",
+                    });
+                    return res.json();
+                  }
+                }).then((data) => {
+                  if (data) {
+                    toast.success("Comment created successfully", {
+                      id: "comment",
+                      position: "top-center",
+                    });
+                    post.comments.push(data);
+                  }
+                }).catch((err) => {
+                  toast.error("Failed to create comment", {
+                    id: "comment",
+                    position: "top-center",
+                  });
+                });
+                e.preventDefault()
+                }} className="w-full relative flex items-center">
                 <Input
-                  className="w-full min-h-[44px] bg-dark-3 px-[16px] text-light-4"
+                  className="w-full min-h-[44px] bg-dark-3 px-[16px] placeholder:text-light-4 text-light-2"
                   placeholder="Write your comment..."
+                  name="message"
                 />
                 <button type="submit" title="Send comment" className="absolute right-[16px] text-primary">
                   <SendIcon />
@@ -173,7 +260,7 @@ const HomePageComponent = () => {
             </div>
           </div>
         </div>
-      ))}
+      )})}
     </>
   );
 };

@@ -80,11 +80,11 @@ async function generateMetadata() {
   return {
     title: `${profile.fullName} (${profile.username}) ` + "• UMEDIAGRAM",
     description:
-      "Share your moments, connect with creators, and explore new stories on Snapgram.",
+      profile.bio??"Share your moments, connect with creators, and explore new stories on Snapgram",
     openGraph: {
       title: `${profile.fullName} (${profile.username}) ` + "• UMEDIAGRAM",
       description:
-        "Share your moments, connect with creators, and explore new stories on Snapgram.",
+        profile.bio??"Share your moments, connect with creators, and explore new stories on Snapgram",
       url: "https://umediagram.vercel.app",
       siteName: "Snapgram",
       images: [
@@ -104,7 +104,7 @@ async function generateMetadata() {
       card: "summary_large_image",
       title: `${profile.fullName} (${profile.username}) ` + "• UMEDIAGRAM",
       description:
-        "Share your moments, connect with creators, and explore new stories on Snapgram.",
+        profile.bio??"Share your moments, connect with creators, and explore new stories on Snapgram",
       images: [
         profile.photo ??
           "https://files.moontv.uz/uploads/profile_not_found.png",
