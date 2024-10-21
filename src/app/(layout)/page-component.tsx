@@ -38,7 +38,7 @@ const HomePageComponent = () => {
       const rect = post.getBoundingClientRect();
       const video = post.querySelector("video");
 
-      if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+      if (rect.top + 500 >= 0 && rect.bottom <= window.innerHeight + 500) {
         setActiveIndex(index); // Faol postni aniqlash
         video?.play();
       } else {
@@ -134,7 +134,7 @@ const HomePageComponent = () => {
 
           <Swiper spaceBetween={10} slidesPerView={1}>
       {post.content.map((content) => (
-        <SwiperSlide key={content.url}>
+        <SwiperSlide key={content.url + Math.random()}>
           {content.type === "IMAGE" ? (
             <Image
               src={content.url}
