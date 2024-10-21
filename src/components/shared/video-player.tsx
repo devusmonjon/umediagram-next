@@ -1,12 +1,10 @@
 import { PlayIcon, Volume2, VolumeOff } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const VideoPlayer = ({ content }: { content: { url: string } }) => {
   const [videoPlayed, setVideoPlayed] = useState<boolean>(false);
   const [videoMuted, setVideoMuted] = useState<boolean>(true);
   const video = useRef<HTMLVideoElement>(null);
-
-  console.log(videoPlayed);
 
   return (
     <div className="relative flex items-center justify-center">
@@ -38,7 +36,10 @@ const VideoPlayer = ({ content }: { content: { url: string } }) => {
         autoPlay
       >
         <source
-          src={content.url}
+          src={content.url.replace(
+            "files.moontv.uz",
+            "proxy-tau-one.vercel.app"
+          )}
           type={`video/${content.url.split(".").pop()}`}
         />
       </video>

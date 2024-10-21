@@ -17,6 +17,25 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import VideoPlayer from "@/components/shared/video-player";
+import Link from "next/link";
+
+// Hashtaglarni aniqlab linkka aylantirish funksiyasi
+const renderCaptionWithHashtags = (caption: string) => {
+  return caption.split(/(\s+)/).map((word: string, index: number) => {
+    if (word.startsWith("#")) {
+      return (
+        <Link
+          key={index}
+          href={`/search?tag=${word.substring(1)}`}
+          className="text-light-4 font-semibold text-[16px] hover:underline"
+        >
+          {word}
+        </Link>
+      );
+    }
+    return <span key={index}>{word}</span>;
+  });
+};
 
 const HomePageComponent = () => {
   const [feed, setFeed] = useState<{ posts: IPost[] } | null>(null);
@@ -29,7 +48,7 @@ const HomePageComponent = () => {
 
   return (
     <>
-      <div className="flex my-[40px] items-center justify-between w-full">
+      <div className="flex my-[40px] items-center justify-between w-full bg-dark-2">
         <Typhography variant="h2" className="font-bold">
           Home Feed
         </Typhography>
@@ -51,8 +70,9 @@ const HomePageComponent = () => {
             tabIndex={0}
             className="w-full p-[36px_29px] border border-dark-4 rounded-[30px] mb-[40px]"
           >
-            <h1 className="title">{post.caption}</h1>
-            {/* <div className="overflow-y-auto flex max-w-full"> */}
+            <h1 className="text-[16px] font-semibold leading-[140%]">
+              {renderCaptionWithHashtags(post.caption)}
+            </h1>
             <Swiper
               spaceBetween={10}
               slidesPerView={1}
@@ -82,7 +102,6 @@ const HomePageComponent = () => {
                 return <></>;
               })}
             </Swiper>
-            {/* </div> */}
           </div>
         );
       })}
