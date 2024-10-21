@@ -10,62 +10,61 @@ import Typhography from "@/components/ui/typography";
 import { getFeed, IPost } from "@/work-with-api";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
 import VideoPlayer from "@/components/shared/video-player";
+import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
 import { EditIcon, SendIcon } from "@/icons";
 import { useAuthStore } from "@/store/auth";
 import { Input } from "@/components/ui/input";
-
-// Hashtaglarni aniqlab linkka aylantirish funksiyasi
-const renderCaptionWithHashtags = (caption: string) => {
-  return caption.split(/(\s+)/).map((word: string, index: number) => {
-    if (word.startsWith("#")) {
-      return (
-        <Link
-          key={index}
-          href={`/search?tag=${word.substring(1)}`}
-          className="text-light-4 font-semibold text-[16px] hover:underline"
-        >
-          {word}
-        </Link>
-      );
-    }
-    return <span key={index}>{word}</span>;
-  });
-};
+import "swiper/css";
 
 const HomePageComponent = () => {
   const [feed, setFeed] = useState<{ posts: IPost[] } | null>(null);
+  const postRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
   const auth = useAuthStore();
-  const observer = useRef<IntersectionObserver>();
 
   useEffect(() => {
-    getFeed(50).then((data) => setFeed(data));
-
-    observer.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const video = entry.target.querySelector("video") as HTMLVideoElement;
-          if (entry.isIntersecting) {
-            video?.play();
-          } else {
-            video?.pause();
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    return () => observer.current?.disconnect();
+    getFeed(50)
+      .then((res) => res)
+      .then((data) => setFeed(data));
   }, []);
 
-  const attachObserver = (element: HTMLElement | null) => {
-    if (element && observer.current) {
-      observer.current.observe(element);
+  // Scroll orqali postlarni boshqarish
+  const handleScroll = () => {
+    postRefs.current.forEach((post, index) => {
+      if (!post) return;
+
+      const rect = post.getBoundingClientRect();
+      const video = post.querySelector("video");
+
+      if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+        setActiveIndex(index); // Faol postni aniqlash
+        video?.play();
+      } else {
+        video?.pause(); // Ko‘rinmayotgan video pauza qilinadi
+      }
+    });
+  };
+
+  // `j` va `k` orqali postlar o‘rtasida harakatlanish
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "j" && activeIndex < (feed?.posts.length || 0) - 1) {
+      postRefs.current[activeIndex + 1]?.scrollIntoView({ behavior: "smooth" });
+    } else if (e.key === "k" && activeIndex > 0) {
+      postRefs.current[activeIndex - 1]?.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeIndex, feed]);
 
   return (
     <>
@@ -84,26 +83,27 @@ const HomePageComponent = () => {
         </Select>
       </div>
 
-      {feed?.posts?.map((post: IPost) => (
-        <div
-          key={post._id}
-          role="article"
-          tabIndex={0}
-          className="w-full p-[36px_29px] border border-dark-4 rounded-[30px] mb-[40px] min-h-[863px]"
-          ref={(el) => attachObserver(el)}
-        >
+      {feed?.posts?.map((post, index) => (
+  <div
+    key={post._id}
+    // @ts-ignore
+    ref={(el) => (postRefs.current[index] = el)}
+    role="article"
+    tabIndex={0}
+    className="w-full p-[36px_29px] border border-dark-4 rounded-[30px] mb-[40px] min-h-[863px]"
+  >
           <div className="flex w-full items-start justify-between mb-[20px]">
             <Link href={`/profile/${post.owner?.username}`} className="flex gap-[10px] items-center rounded-lg">
               <img
-                src={post.owner?.photo}
+                src={`${post.owner?.photo}`}
                 alt={post.owner?.fullName}
                 className="w-[50px] h-[50px] rounded-full object-cover object-center"
               />
               <div className="flex flex-col">
-                <h1 className="text-light text-[18px] font-bold leading-[140%] -tracking-[1]">
+                <h1 className="text-light text-[18px] font-bold leading-[140%]">
                   {post.owner?.fullName}
                 </h1>
-                <p className="text-light-3 text-[14px] font-semibold leading-[140%] -tracking-[1]">
+                <p className="text-light-3 text-[14px] font-semibold leading-[140%]">
                   {new Date(post.createdAt).toDateString()}
                 </p>
               </div>
@@ -116,52 +116,53 @@ const HomePageComponent = () => {
           </div>
 
           <h1 className="text-[16px] font-semibold leading-[140%] mb-[30px]">
-            {renderCaptionWithHashtags(post.caption)}
+            {post.caption.split(/(\s+)/).map((word, i) =>
+              word.startsWith("#") ? (
+                <Link
+                  key={i}
+                  href={`/search?tag=${word.substring(1)}`}
+                  className="text-light-4 font-semibold hover:underline"
+                >
+                  {word}
+                </Link>
+              ) : (
+                <span key={i}>{word}</span>
+              )
+            )}
           </h1>
 
-          <Swiper
-            spaceBetween={10}
-            slidesPerView={1}
-            onSlideChange={(swiper) => {
-              const activeSlide = swiper.slides[swiper.activeIndex];
-              const video = activeSlide.querySelector("video") as HTMLVideoElement;
-              video?.play();
-            }}
-          >
-            {post.content.map((content) => {
-              if (content.type === "IMAGE") {
-                return (
-                  <SwiperSlide key={content.url}>
-                    <Image
-                      src={content.url}
-                      alt={content.url}
-                      width={300}
-                      height={520}
-                      className="w-full h-[520px] mb-[20px] flex-1 object-cover rounded-[30px]"
-                    />
-                  </SwiperSlide>
-                );
-              } else if (content.type === "VIDEO") {
-                return (
-                  <SwiperSlide key={content.url}>
-                    <VideoPlayer content={content} className="rounded-[30px] overflow-hidden" />
-                  </SwiperSlide>
-                );
-              }
-              return null;
-            })}
-          </Swiper>
+          <Swiper spaceBetween={10} slidesPerView={1}>
+      {post.content.map((content) => (
+        <SwiperSlide key={content.url}>
+          {content.type === "IMAGE" ? (
+            <Image
+              src={content.url}
+              alt={content.url}
+              width={300}
+              height={520}
+              className="w-full h-[520px] mb-[20px] object-cover rounded-[30px]"
+            />
+          ) : (
+            <VideoPlayer 
+              content={content} 
+              className="rounded-[30px] overflow-hidden" 
+              isActive={activeIndex === index} // Faol holatni aniqlash
+            />
+          )}
+        </SwiperSlide>
+      ))}
+    </Swiper> 
 
           <div className="mt-[40px]">
             <div className="flex gap-[10px] items-center rounded-lg">
               <img
-                src={post.owner?.photo}
+                src={`${post.owner?.photo}`}
                 alt={post.owner?.fullName}
                 className="w-[50px] h-[50px] rounded-full object-cover object-center"
               />
               <form onSubmit={(e) => e.preventDefault()} className="w-full relative flex items-center">
                 <Input
-                  className="w-full min-h-[44px] bg-dark-3 px-[16px] text-light-4 text-[16px] font-normal leading-[140%]"
+                  className="w-full min-h-[44px] bg-dark-3 px-[16px] text-light-4"
                   placeholder="Write your comment..."
                 />
                 <button type="submit" title="Send comment" className="absolute right-[16px] text-primary">

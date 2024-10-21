@@ -1,10 +1,18 @@
 import { PlayIcon, Volume2, VolumeOff } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-const VideoPlayer = ({ content, className }: { content: { url: string }, className?: string }) => {
+const VideoPlayer = ({ content, className, isActive }: { content: { url: string }, className?: string, isActive: boolean }) => {
   const [videoPlayed, setVideoPlayed] = useState<boolean>(false);
   const [videoMuted, setVideoMuted] = useState<boolean>(true);
   const video = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (isActive) {
+      video.current?.play();
+    } else {
+      video.current?.pause();
+    }
+  }, [isActive]);
 
   return (
     <div className={`relative flex items-center justify-center ${className}`}>
@@ -25,21 +33,16 @@ const VideoPlayer = ({ content, className }: { content: { url: string }, classNa
         {videoMuted ? <VolumeOff /> : <Volume2 />}
       </button>
       <video
-        className={`w-full h-[520px] mb-[20px] flex-1 object-cover ${
-          !videoPlayed ? "-z-10" : "cursor-pointer"
-        }`}
+        className={`w-full h-[520px] mb-[20px] flex-1 object-cover ${!videoPlayed ? "-z-10" : "cursor-pointer"}`}
         onClick={() => video.current?.pause()}
         ref={video}
         onPlay={() => setVideoPlayed(true)}
         onPause={() => setVideoPlayed(false)}
         muted={videoMuted}
-        autoPlay
+        autoPlay={isActive}
       >
         <source
-          src={content.url.replace(
-            "files.moontv.uz",
-            "proxy-tau-one.vercel.app"
-          )}
+          src={content.url.replace("files.moontv.uz", "proxy-tau-one.vercel.app")}
           type={`video/${content.url.split(".").pop()}`}
         />
       </video>

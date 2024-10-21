@@ -79,6 +79,10 @@ body {
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @layer components {
   button,
   input {
@@ -99,7 +103,7 @@ body {
   .navlink:hover .aaa {
     @apply text-white;
   }
-  button {
+  button,div[tabindex] {
     @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50;
   }
 }
