@@ -99,4 +99,7 @@ body {
   .navlink:hover .aaa {
     @apply text-white;
   }
+  button {
+    @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50;
+  }
 }
