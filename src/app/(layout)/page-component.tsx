@@ -86,7 +86,7 @@ const HomePageComponent = () => {
       {feed?.posts?.map((post, index) => (
   <div
     key={post._id}
-    // @ts-ignore
+    // @ts-expect-error
     ref={(el) => (postRefs.current[index] = el)}
     role="article"
     tabIndex={0}
