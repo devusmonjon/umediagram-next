@@ -86,7 +86,8 @@ const HomePageComponent = () => {
       {feed?.posts?.map((post, index) => (
   <div
     key={post._id}
-    // @ts-expect-error
+    // @typescript-eslint/ban-ts-comment
+    // @ts-expect-error @typescript-eslint/ban-ts-comment 
     ref={(el) => (postRefs.current[index] = el)}
     role="article"
     tabIndex={0}
