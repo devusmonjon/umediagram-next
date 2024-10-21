@@ -1,15 +1,15 @@
 import { PlayIcon, Volume2, VolumeOff } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-const VideoPlayer = ({ content }: { content: { url: string } }) => {
+const VideoPlayer = ({ content, className }: { content: { url: string }, className?: string }) => {
   const [videoPlayed, setVideoPlayed] = useState<boolean>(false);
   const [videoMuted, setVideoMuted] = useState<boolean>(true);
   const video = useRef<HTMLVideoElement>(null);
 
   return (
-    <div className="relative flex items-center justify-center">
+    <div className={`relative flex items-center justify-center ${className}`}>
       {!videoPlayed && (
-        <button
+        <button title="play"
           className="absolute"
           onClick={() => {
             video.current?.play();

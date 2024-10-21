@@ -18,6 +18,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import VideoPlayer from "@/components/shared/video-player";
 import Link from "next/link";
+import { EditIcon } from "@/icons";
+import { useAuthStore } from "@/store/auth";
 
 // Hashtaglarni aniqlab linkka aylantirish funksiyasi
 const renderCaptionWithHashtags = (caption: string) => {
@@ -39,6 +41,7 @@ const renderCaptionWithHashtags = (caption: string) => {
 
 const HomePageComponent = () => {
   const [feed, setFeed] = useState<{ posts: IPost[] } | null>(null);
+  const auth = useAuthStore();
 
   useEffect(() => {
     getFeed(50)
@@ -70,7 +73,21 @@ const HomePageComponent = () => {
             tabIndex={0}
             className="w-full p-[36px_29px] border border-dark-4 rounded-[30px] mb-[40px]"
           >
-            <h1 className="text-[16px] font-semibold leading-[140%]">
+            <div className="flex w-full items-start justify-between mb-[20px]">
+              <Link href={`/profile/${post.owner?.username}`} className="flex gap-[10px] items-center rounded-lg">
+                <img src={`${post.owner?.photo}`} alt={post.owner?.fullName} className="w-[50px] h-[50px] rounded-full object-cover object-center" />
+                <div className="flex flex-col">
+                  <h1 className="text-light text-[18px] font-bold leading-[140%] -tracking-[1]">{post.owner?.fullName}</h1>
+                  <p className="text-light-3 text-[14px] font-semibold leading-[140%] -tracking-[1]">{new Date(post.createdAt).toDateString()}</p>
+                </div>
+              </Link>
+              {auth.isAuthenticated && post.owner?._id === auth.user?.user._id && (
+                <button title="Edit post" className="text-primary rounded-[10px] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50">
+                  <EditIcon />
+                </button>
+              )}
+            </div>
+            <h1 className="text-[16px] font-semibold leading-[140%] mb-[30px]">
               {renderCaptionWithHashtags(post.caption)}
             </h1>
             <Swiper
@@ -88,14 +105,14 @@ const HomePageComponent = () => {
                         alt={content.url}
                         width={300}
                         height={520}
-                        className="w-full h-[520px] mb-[20px] flex-1 object-cover"
+                        className="w-full h-[520px] mb-[20px] flex-1 object-cover rounded-[30px]"
                       />
                     </SwiperSlide>
                   );
                 } else if (content.type === "VIDEO") {
                   return (
                     <SwiperSlide key={content.url + Math.random()}>
-                      <VideoPlayer content={content} />
+                      <VideoPlayer content={content} className="rounded-[30px] overflow-hidden" />
                     </SwiperSlide>
                   );
                 }
