@@ -95,7 +95,7 @@ const Sidebar = () => {
     setAuthLocal(auth as IAuthStore);
   }, [auth]);
   return (
-    <aside className="w-[104px] overflow-x-hidden duration-300 whitespace-nowrap md:w-[350px] h-screen bg-dark-2 fixed top-0">
+    <aside className="max-w-[104px] overflow-x-hidden duration-300 whitespace-nowrap md:max-w-[300px] w-full h-screen bg-dark-2 fixed top-0">
       <div className="px-[24px] pt-[48px] pb-[32px]">
         <Link href="/">
           <Typhography

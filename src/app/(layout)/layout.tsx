@@ -63,7 +63,7 @@ const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
   ) : (
     <>
       <Sidebar />
-      <main className="duration-300 pl-[104px] md:pl-[350px]">{children}</main>
+      <main className="duration-300 pl-[104px] md:pl-[300px]">{children}</main>
     </>
   );
 };

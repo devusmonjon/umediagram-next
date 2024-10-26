@@ -107,3 +107,19 @@ html {
     @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50;
   }
 }
+
+::-webkit-scrollbar-thumb {
+  background-color: #877EFF;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #09090A;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}

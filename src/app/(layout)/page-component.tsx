@@ -25,7 +25,7 @@ const HomePageComponent = () => {
   const auth = useAuthStore();
 
   useEffect(() => {
-    getFeed(50)
+    getFeed(4)
       .then((res) => res)
       .then((data) => setFeed(data));
   }, []);
@@ -68,7 +68,7 @@ const HomePageComponent = () => {
 
   return (
     <>
-      <div className="flex my-[40px] items-center justify-between w-full bg-dark-2">
+      <div className="flex my-[40px] items-center justify-between w-full">
         <Typhography variant="h2" className="font-bold">
           Home Feed
         </Typhography>
