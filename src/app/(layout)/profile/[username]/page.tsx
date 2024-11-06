@@ -20,21 +20,21 @@ async function generateMetadata() {
   if (!profile) {
     // metadata
     return {
-      title: "Snapgram - Explore & Connect",
+      title: "Umediagram - Explore & Connect",
       description:
-        "Share your moments, connect with creators, and explore new stories on Snapgram.",
+        "Share your moments, connect with creators, and explore new stories on Umediagram.",
       openGraph: {
-        title: "Snapgram - Explore & Connect",
+        title: "Umediagram - Explore & Connect",
         description:
-          "Share your moments, connect with creators, and explore new stories on Snapgram.",
+          "Share your moments, connect with creators, and explore new stories on Umediagram.",
         url: "https://umediagram.vercel.app",
-        siteName: "Snapgram",
+        siteName: "Umediagram",
         images: [
           {
             url: "/preview.png", // Path to your thumbnail image
             width: 1438,
             height: 1023,
-            alt: "Snapgram Home Feed",
+            alt: "Umediagram Home Feed",
           },
         ],
         locale: "en_US",
@@ -42,9 +42,9 @@ async function generateMetadata() {
       },
       twitter: {
         card: "summary_large_image",
-        title: "Snapgram - Explore & Connect",
+        title: "Umediagram - Explore & Connect",
         description:
-          "Share your moments, connect with creators, and explore new stories on Snapgram.",
+          "Share your moments, connect with creators, and explore new stories on Umediagram.",
         images: ["/preview.png"], // Path to your image
       },
       // canonical
@@ -70,7 +70,7 @@ async function generateMetadata() {
         { media: "(prefers-color-scheme: dark)", color: "#000000" },
       ],
       appleWebApp: {
-        title: "Snapgram - Explore & Connect",
+        title: "Umediagram - Explore & Connect",
         capable: true,
         statusBarStyle: "default",
       },
@@ -80,13 +80,13 @@ async function generateMetadata() {
   return {
     title: `${profile.fullName} (${profile.username}) ` + "• UMEDIAGRAM",
     description:
-      profile.bio??"Share your moments, connect with creators, and explore new stories on Snapgram",
+      profile.bio??"Share your moments, connect with creators, and explore new stories on Umediagram",
     openGraph: {
       title: `${profile.fullName} (${profile.username}) ` + "• UMEDIAGRAM",
       description:
-        profile.bio??"Share your moments, connect with creators, and explore new stories on Snapgram",
+        profile.bio??"Share your moments, connect with creators, and explore new stories on Umediagram",
       url: "https://umediagram.vercel.app",
-      siteName: "Snapgram",
+      siteName: "Umediagram",
       images: [
         {
           url:
@@ -94,7 +94,7 @@ async function generateMetadata() {
             "https://files.moontv.uz/uploads/profile_not_found.png", // Path to your thumbnail image
           width: 300,
           height: 300,
-          alt: profile.fullName ?? "Snapgram",
+          alt: profile.fullName ?? "Umediagram",
         },
       ],
       locale: "en_US",
@@ -104,7 +104,7 @@ async function generateMetadata() {
       card: "summary_large_image",
       title: `${profile.fullName} (${profile.username}) ` + "• UMEDIAGRAM",
       description:
-        profile.bio??"Share your moments, connect with creators, and explore new stories on Snapgram",
+        profile.bio??"Share your moments, connect with creators, and explore new stories on Umediagram",
       images: [
         profile.photo ??
           "https://files.moontv.uz/uploads/profile_not_found.png",

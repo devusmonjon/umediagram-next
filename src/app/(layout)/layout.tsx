@@ -5,6 +5,7 @@ import { useAuthStore } from "@/store/auth";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { checkUser, refreshToken } from "@/work-with-api";
+import Loading from "./loading";
 
 const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
   const [loading, setLoading] = useState(true);
@@ -59,7 +60,7 @@ const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
   }, [auth, pathname]);
 
   return loading ? (
-    <>Loading. . .</>
+    <Loading />
   ) : (
     <>
       <Sidebar />

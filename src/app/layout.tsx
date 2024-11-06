@@ -7,21 +7,21 @@ import { Toaster } from "@/components/ui/sonner";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Snapgram - Explore & Connect",
+  title: "Umediagram - Explore & Connect",
   description:
-    "Share your moments, connect with creators, and explore new stories on Snapgram.",
+    "Share your moments, connect with creators, and explore new stories on Umediagram.",
   openGraph: {
-    title: "Snapgram - Explore & Connect",
+    title: "Umediagram - Explore & Connect",
     description:
-      "Share your moments, connect with creators, and explore new stories on Snapgram.",
+      "Share your moments, connect with creators, and explore new stories on Umediagram.",
     url: "https://umediagram.vercel.app",
-    siteName: "Snapgram",
+    siteName: "Umediagram",
     images: [
       {
         url: "/preview.png", // Path to your thumbnail image
         width: 1438,
         height: 1023,
-        alt: "Snapgram Home Feed",
+        alt: "Umediagram Home Feed",
       },
     ],
     locale: "en_US",
@@ -29,11 +29,12 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Snapgram - Explore & Connect",
+    title: "Umediagram - Explore & Connect",
     description:
-      "Share your moments, connect with creators, and explore new stories on Snapgram.",
+      "Share your moments, connect with creators, and explore new stories on Umediagram.",
     images: ["/preview.png"], // Path to your image
   },
+  manifest: "/manifest.json",
   // canonical
   robots: {
     index: true,
@@ -57,7 +58,7 @@ export const metadata: Metadata = {
     { media: "(prefers-color-scheme: dark)", color: "#000000" },
   ],
   appleWebApp: {
-    title: "Snapgram - Explore & Connect",
+    title: "Umediagram - Explore & Connect",
     capable: true,
     statusBarStyle: "default",
   },
@@ -78,11 +79,11 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Product",
-              name: "Snapgram Pro Plan",
-              description: "Upgrade to Snapgram Pro for unlimited access.",
+              name: "Umediagram Pro Plan",
+              description: "Upgrade to Umediagram Pro for unlimited access.",
               brand: {
                 "@type": "Organization",
-                name: "Snapgram",
+                name: "Umediagram",
               },
             }),
           }}

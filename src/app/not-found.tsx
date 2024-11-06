@@ -2,7 +2,7 @@ import Typhography from "@/components/ui/typography";
 
 async function generateMetadata() {
   return {
-    title: "404 - page not found | Snapgram",
+    title: "404 - page not found | Umediagram",
   };
 }
 

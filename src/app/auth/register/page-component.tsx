@@ -21,9 +21,11 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { register, uploadFile } from "@/work-with-api";
+import { register } from "@/work-with-api";
 import { Eye, EyeOff, Loader2, X } from "lucide-react";
 import { useAuthStore } from "@/store/auth";
+import { API_URL } from "@/constants";
+import Cookies from "js-cookie";
 
 const RegisterPageComponent = (): JSX.Element => {
   const [file, setFile] = useState<string | null>("null");
@@ -119,7 +121,7 @@ const RegisterPageComponent = (): JSX.Element => {
     <div className="flex min-h-screen">
       <div className="w-full max-w-md p-8 mx-auto flex flex-col justify-center space-y-6 bg-black text-white">
         <div className="text-center">
-          <h1 className="text-4xl font-bold">Snapgram</h1>
+          <h1 className="text-4xl font-bold">Umediagram</h1>
           <p className="mt-2 text-gray-400">Register a new account</p>
         </div>
         <Form {...form}>
@@ -206,34 +208,61 @@ const RegisterPageComponent = (): JSX.Element => {
                   disabled={fileLoading || loading}
                   onChange={(e) => {
                     if (!e.target.files) return;
-
+                    toast.loading("Uploading...", {
+                      position: "top-center",
+                      id: "uploading",
+                    });
                     setFileLoading(true);
-                    toast.promise(
-                      uploadFile(e.target.files?.[0] || null, false)
-                        .then((data) => {
-                          try {
-                            if (!data.error) {
-                              toast.success("Upload Successful", {
-                                position: "top-center",
-                                id: "uploading",
-                              });
-                              setFile(data.files[0][0].url);
-                            } else {
-                              throw new Error(data.error);
-                            }
-                          } catch (error) {
-                            return error;
-                          }
-                        })
-                        .finally(() => setFileLoading(false)),
-                      {
-                        loading: "Uploading...",
-                        success: "Upload Successful",
-                        error: "Upload Failed",
-                        position: "top-center",
-                        id: "uploading",
-                      }
-                    );
+                    console.log(e.target.files[0]);
+                    const formData = new FormData();
+                    formData.append("files", e.target.files[0]);
+                    const token = Cookies
+                    fetch(`${API_URL}/api/upload/files`, {
+                      method: "POST",
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                      },
+                      body: formData,
+                    })
+                      .then((res) => res.json())
+                      .then((data) => {
+                        toast.success("Upload Successful", {
+                          position: "top-center",
+                          id: "uploading",
+                        });
+                        setFile(data.files[0][0].url);
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                        toast.error("Something went wrong", {
+                          position: "top-center",
+                          id: "uploading",
+                        });
+                      })
+                      .finally(() => setFileLoading(false));
+                    // uploadFile(e.target.files?.[0], false)
+                    //   .then((data) => {
+                    //     try {
+                    //       if (!data.error) {
+                    //         toast.success("Upload Successful", {
+                    //           position: "top-center",
+                    //           id: "uploading",
+                    //         });
+                    //         setFile(data.files[0][0].url);
+                    //       } else {
+                    //         console.log(data);
+
+                    //         throw new Error(data.error);
+                    //       }
+                    //     } catch (error) {
+                    //       console.log(error);
+                    //       toast.error("Something went wrong", {
+                    //         position: "top-center",
+                    //         id: "uploading",
+                    //       });
+                    //     }
+                    //   })
+                    //   .finally(() => setFileLoading(false));
                   }}
                 />
               </FormControl>

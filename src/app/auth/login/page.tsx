@@ -4,15 +4,15 @@ import LoginPageComponent from "./page-component";
 // metadata
 async function generateMetadata() {
   return {
-    title: "Login | Snapgram",
-    description: "Register the Snapgram account",
+    title: "Login | Umediagram",
+    description: "Register the Umediagram account",
     openGraph: {
-      title: "Login | Snapgram",
-      description: "Register the Snapgram account",
+      title: "Login | Umediagram",
+      description: "Register the Umediagram account",
     },
     twitter: {
-      title: "Login | Snapgram",
-      description: "Register the Snapgram account",
+      title: "Login | Umediagram",
+      description: "Register the Umediagram account",
     },
     robots: {
       index: true,

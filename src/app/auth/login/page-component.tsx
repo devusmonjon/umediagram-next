@@ -94,7 +94,7 @@ const LoginPageComponent: NextPage = (): JSX.Element => {
     <div className="flex min-h-screen">
       <div className="w-full max-w-md p-8 mx-auto flex flex-col justify-center space-y-6 bg-black text-white">
         <div className="text-center">
-          <h1 className="text-4xl font-bold">Snapgram</h1>
+          <h1 className="text-4xl font-bold">Umediagram</h1>
           <p className="mt-2 text-gray-400">Log in to your account</p>
         </div>
         <Form {...form}>
