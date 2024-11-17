@@ -4,7 +4,7 @@ import { MetadataRoute } from "next";
 // Foydalanuvchilar uchun dinamik sitemap yaratish
 export default async function generateSitemap(): Promise<MetadataRoute.Sitemap> {
   const users = await getAllUsernames(); // Username'larni olib kelish
-  const siteUrl = "https://umediagram.vercel.app"; // Saytingiz URL
+  const siteUrl = "https://social.usmonjon.uz"; // Saytingiz URL
 
   // Statik sahifalar uchun route'lar
   const staticRoutes = ["", "/about", "/contact", "/explore"].map((path) => ({
