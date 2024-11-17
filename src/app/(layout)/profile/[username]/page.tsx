@@ -27,7 +27,7 @@ async function generateMetadata() {
         title: "Umediagram - Explore & Connect",
         description:
           "Share your moments, connect with creators, and explore new stories on Umediagram.",
-        url: "https://umediagram.vercel.app",
+        url: "https://social.usmonjon.uz",
         siteName: "Umediagram",
         images: [
           {
@@ -64,7 +64,7 @@ async function generateMetadata() {
         initialScale: 1,
         maximumScale: 1,
       },
-      metadataBase: new URL("https://umediagram.vercel.app"),
+      metadataBase: new URL("https://social.usmonjon.uz"),
       themeColor: [
         { media: "(prefers-color-scheme: light)", color: "#fafafa" },
         { media: "(prefers-color-scheme: dark)", color: "#000000" },
@@ -85,7 +85,7 @@ async function generateMetadata() {
       title: `${profile.fullName} (${profile.username}) ` + "• UMEDIAGRAM",
       description:
         profile.bio??"Share your moments, connect with creators, and explore new stories on Umediagram",
-      url: "https://umediagram.vercel.app",
+      url: "https://social.usmonjon.uz",
       siteName: "Umediagram",
       images: [
         {
@@ -127,7 +127,7 @@ async function generateMetadata() {
       initialScale: 1,
       maximumScale: 1,
     },
-    metadataBase: new URL("https://umediagram.vercel.app"),
+    metadataBase: new URL("https://social.usmonjon.uz"),
     themeColor: [
       { media: "(prefers-color-scheme: light)", color: "#fafafa" },
       { media: "(prefers-color-scheme: dark)", color: "#000000" },

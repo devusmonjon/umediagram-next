@@ -2,7 +2,7 @@ import { getAllUsernames } from "@/work-with-api";
 
 export async function GET() {
   const users = await getAllUsernames();
-  const siteUrl = "https://umediagram.vercel.app";
+  const siteUrl = "https://social.usmonjon.uz";
 
   // Statik sahifalar uchun routes
   const staticRoutes = ["", "/about", "/contact", "/explore"].map((path) => ({

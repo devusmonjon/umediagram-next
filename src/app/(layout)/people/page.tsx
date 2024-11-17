@@ -10,7 +10,7 @@ export const generateMetadata = () => {
           title: "Discover People | Umediagram - Explore & Connect",
           description:
             "Discover people on Umediagram, connect with creators, and explore new stories.",
-          url: "https://umediagram.vercel.app",
+          url: "https://social.usmonjon.uz",
           siteName: "Umediagram",
           images: [
             {
@@ -47,7 +47,7 @@ export const generateMetadata = () => {
           initialScale: 1,
           maximumScale: 1,
         },
-        metadataBase: new URL("https://umediagram.vercel.app"),
+        metadataBase: new URL("https://social.usmonjon.uz"),
         themeColor: [
           { media: "(prefers-color-scheme: light)", color: "#fafafa" },
           { media: "(prefers-color-scheme: dark)", color: "#000000" },

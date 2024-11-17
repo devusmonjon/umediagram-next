@@ -2,7 +2,7 @@ import { getAllPosts, IPost } from "@/work-with-api"; // Barcha postlarni olish 
 
 export async function GET() {
   const posts = await getAllPosts(); // Postlarni olib kelamiz
-  const siteUrl = "https://umediagram.vercel.app";
+  const siteUrl = "https://social.usmonjon.uz";
   const currentDate = new Date().toUTCString();
   const rssItemsXml = posts
     .map(
