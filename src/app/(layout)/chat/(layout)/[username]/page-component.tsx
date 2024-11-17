@@ -11,7 +11,7 @@ import { FileIcon, MicIcon, PhoneIcon, SendIcon, VideoIcon } from "@/icons";
 import { Input } from "@/components/ui/input";
 import { SmilePlusIcon } from "lucide-react";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react"
-import twemoji from "twemoji"; // Import twemoji
+// import twemoji from "twemoji"; // Import twemoji
 
 const ChatPageComponent = ({ username }: { username: string }) => {
   const [emojiPickerVisible, setEmojiPickerVisible] = useState<boolean>(false)
