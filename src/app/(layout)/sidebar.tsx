@@ -88,7 +88,7 @@ const Sidebar = () => {
   const auth = useAuthStore();
 
   const isActive = (href: string) => {
-    return pathname === href;
+    return href !== "/" ? pathname.includes(href) : pathname === href;
   };
 
   useEffect(() => {
@@ -100,9 +100,15 @@ const Sidebar = () => {
         <Link href="/">
           <Typhography
             variant="h2"
-            className="text-[28x] flex items-center gap-[8px] duration-300"
+            className="text-[28px] flex items-center gap-[8px] duration-300"
           >
-            <Image src="/logo.png" width={24} height={24} alt="Logo" className="min-w-max scale-150" />{" "}
+            <Image
+              src="/logo.png"
+              width={24}
+              height={24}
+              alt="Logo"
+              className="min-w-max scale-150"
+            />{" "}
             <span className="duration-300 opacity-0 md:opacity-100">
               UMEDIAGRAM
             </span>

@@ -95,10 +95,10 @@ const UserCard = ({ user }: { user: IUser }) => {
                 : "https://files.moontv.uz/" + user.photo)
               : "https://files.moontv.uz/uploads/profile_not_found.png"
           }
-          alt=""
+          alt={user.fullName}
           width={54}
           height={54}
-          className="w-[54px] h-[54px] rounded-full"
+          className="w-[54px] h-[54px] rounded-full object-cover"
         />
       </Link>
       <Link
